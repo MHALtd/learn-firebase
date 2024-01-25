@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { db } from "../config/firebase";
+import { db, auth } from "../config/firebase";
 import { getDocs, collection, doc, addDoc, deleteDoc, updateDoc } from "firebase/firestore";
 
 const Movies = () => {
@@ -23,6 +23,7 @@ const Movies = () => {
         releaseDate: newReleaseDate,
         director: newMovieDirector,
         airing: isNewMovieAiring,
+        userId: auth?.currentUser?.uid,
       });
     } catch (err) {
       console.log(err);
@@ -56,32 +57,35 @@ const Movies = () => {
 
   return (
     <>
-      <div className="submit-movie">
-        <input
-          className="input-box"
-          type="text"
-          placeholder="Movie Title"
-          onChange={(e) => setNewMovieTitle(e.target.value)}
-        />
-        <input
-          className="input-box"
-          type="text"
-          placeholder="Director"
-          onChange={(e) => setNewMovieDirector(e.target.value)}
-        />
-        <input
-          className="input-box"
-          type="number"
-          placeholder="Release Date"
-          onChange={(e) => setNewReleaseDate(Number(e.target.value))}
-        />
-        <div>
-          <input type="checkbox" checked={isNewMovieAiring} onChange={(e) => setIsNewMovieAiring(e.target.checked)} />
-          <label>Airing</label> <br />
-        </div>
+      <div>
+        <div className="submit-movie">
+          <input
+            className="input-box"
+            type="text"
+            placeholder="Movie Title"
+            onChange={(e) => setNewMovieTitle(e.target.value)}
+          />
+          <input
+            className="input-box"
+            type="text"
+            placeholder="Director"
+            onChange={(e) => setNewMovieDirector(e.target.value)}
+          />
+          <input
+            className="input-box"
+            type="number"
+            placeholder="Release Date"
+            onChange={(e) => setNewReleaseDate(Number(e.target.value))}
+          />
+          <div>
+            <input type="checkbox" checked={isNewMovieAiring} onChange={(e) => setIsNewMovieAiring(e.target.checked)} />
+            <label>Airing</label> <br />
+          </div>
 
-        <button onClick={onSubmitMovie}>Submit Movie</button>
+          <button onClick={onSubmitMovie}>Submit Movie</button>
+        </div>
       </div>
+
       <div className="movie-list">
         {movieList.map((movie) => (
           <div className="movie-info">

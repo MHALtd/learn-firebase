@@ -5,9 +5,9 @@ import Movies from "./components/Movies";
 function App() {
   return (
     <>
-      {/* <div className="App">
+      <div className="App">
         <Auth />
-      </div> */}
+      </div>
       <Movies />
     </>
   );
